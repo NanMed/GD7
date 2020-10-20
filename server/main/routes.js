@@ -1,4 +1,5 @@
 var express = require('express');
+const cors = require('cors');
 const PedidoController = require('../controllers/PedidoController');
 const PedidoModel = require('../models/Pedido');
 

@@ -4,39 +4,56 @@ import Pedido from './Pedido';
 
 
 const Pedidos = () => {
-   
-    const [pedido, setPedido] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    async function fetchPedido() {
-        const result = await axios("http://localhost:3000/pedido/all")
-        setPedido(result.data);
-        setLoading(false);
-    }
-
+    const [pedidos, setPedidos] = useState([
+        { id: '', estado:'', nuevo_estado:'' }, 
+    
+    ]);
+    
     useEffect(() => {
-        fetchPedido();
+        axios('http://localhost:5000/pedido/all')
+            .then((response) => {
+                console.log(response['data']['data']);
+                setPedidos(response.data.data);
+            })
+            .catch((error) => {
+                console.log('There was an error: ', error);
+            });
     }, []);
+
+    const addPedido = async () => {
+        let cPedido = Object.assign([], pedidos);
+        const pedidoObject = {
+            estado: '1', 
+            nuevo_estado:'0'
+        };
+        await axios.post('http://localhost:5000/pedido/add', pedidoObject)
+        .then((res) => {
+            console.log(res.data.data)
+            pedidoObject.id = res.data.data.id;
+        }).catch((error) => {
+            console.log("El error es: ", error)
+        });
+        cPedido.push(pedidoObject);
+        setPedidos(cPedido);
+        console.log("Pedidos ", cPedido);
+    }
 
     return (
         <>
              <div className="container">
                  <div className="row">Dashboard</div>
                  <div className ="row">
-                     <button className="btn btn-primary">Crear pedido</button>
+                     <button className="btn btn-primary" onClick={addPedido}>Crear pedido</button>
                  </div>
                  <div className ="row">
                      <div className ="col-md-3">
                          1. Salida de planta
-                        <div>
-                            {pedido.map((pedido, i) => {
+                         <div>
+                            {pedidos.map((pedido, i) => {
+                                //console.log("TODO DENTRO DE LISTA DE TASKS",todo);
                                 return (
-                                    <h1 key={i}>
-                                        <h2>
-                                            {pedido.id}
-                                        </h2>
-                                    
-                                    </h1>
+                                    <Pedido pedido={pedido} i={pedido.id}/>
                                 )
                             })}
                         </div>

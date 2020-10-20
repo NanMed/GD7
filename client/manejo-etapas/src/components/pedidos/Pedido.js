@@ -1,22 +1,18 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Pedido extends Component {
+const Pedidos = ({pedido, i}) => {    
+      return(
+        <div>
+            <div key={pedido.id} id={pedido.id}>
+                <div>
+                <p> { pedido.id } - { pedido.estado }</p>
+                </div>
+            </div>
+        </div>
 
-    state = {
-        id: this.props.pedido.id,
-        estado: this.props.pedido.estado,
-        nuevo_estado: this.props.pedido.nuevo_estado
-    }
+      );
 
-    render(){
-        return(
-            <>
-                <td>{this.state.id}</td>
-                <td>{this.state.estado}</td>
-                <td>{this.state.nuevo_estado}</td>
-            </>
-        )
-    }
+      
 }
 
-export default Pedido;
+export default Pedidos;
