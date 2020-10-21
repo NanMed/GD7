@@ -22,6 +22,15 @@ exports.find = (id) => {
     .first()
 }
 
+exports.actualiza = (pedido) => {
+  return knex('pedido')
+  .where({ id: pedido.id })
+  .update({ 
+            nuevo_estado: pedido.nuevo_estado,
+            time_status: pedido.time
+          })
+}
+
 // exports.changeStatus = (pedido) => {
 //   return knex('pedido')
 //     .where('id', pedido.id)

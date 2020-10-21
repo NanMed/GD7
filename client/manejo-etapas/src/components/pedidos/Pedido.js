@@ -5,7 +5,7 @@ const Pedidos = ({pedido, i}) => {
         <div>
             <div key={pedido.id} id={pedido.id}>
                 <div>
-                <p> { pedido.id } - { pedido.estado }</p>
+                <p> Pedido   { pedido.id.toString() } - { pedido.estado }</p>
                 </div>
             </div>
         </div>

@@ -40,3 +40,19 @@ exports.findById = (req,res) => {
           return res.json({ data: data });
       });
   }
+
+  exports.actualizaDrop = async (req, res) => {
+    let pedido = {};
+    pedido.id = (req.params.id);
+    console.log("ID" + req.params.id);
+    pedido.time = new Date();
+  
+    return await Pedido.actualiza(pedido)
+      .then(() => {
+        console.log("Pedido is done with id: ", pedido);
+        res.json("Pedido done");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
