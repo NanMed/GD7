@@ -38,21 +38,38 @@ export default function App() {
               {}
             );
             dragulaN.on("drop", function (el, target, source, sibling) {
-              console.log("Elemento", el, "Target", target, "Source", source, sibling);
-              var elId = el.id;
-              var destinoId = target.id;
-              console.log(elId);
-              console.log("DestinoID", destinoId);
-              //actualizaEstado(destinoId);
-        
-              if (source.id == 2 && target.id == 1) {
-                dragulaN.cancel(el);
-              }
-              if (source.id == 4 || source.id == 5) {
-                dragulaN.cancel(el);
-              }
+                console.log("Elemento", el, "Target", target, "Source", source, sibling);
+                var elId = el.id;
+                var destinoId = target.id;
+                console.log(elId);
+                console.log("DestinoID", destinoId);
+                console.log("Source ", source.id)
+                //actualizaEstado(destinoId);
+            
+                if (source.id == 2 && target.id == 1) {
+                    dragulaN.cancel(el);
+                } else if (source.id == 4) {
+                    dragulaN.cancel(el);
+                } else {
+                    actualizaPedido(el.id, source.id, target.id);
+                }
             });    
     }, []);
+
+    const actualizaPedido = async (id, source, target) => {
+        const pedidoObject = {
+            id: id,
+            estado: source, 
+            nuevo_estado: target
+        };
+        await axios.post('http://localhost:5000/pedido/actualiza', pedidoObject)
+        .then((res) => {
+            console.log("Logrado")
+            // pedidoObject.id = res.data.data.id;
+        }).catch((error) => {
+            console.log("El error es: ", error)
+        });
+    }
 
     const addPedido = async () => {
         let cPedido = Object.assign([], pedidos);
@@ -69,9 +86,7 @@ export default function App() {
         });
         cPedido.push(pedidoObject);
         setPedidos(cPedido);
-        console.log("Pedidos ", cPedido);
-
-        
+        console.log("Pedidos ", cPedido); 
     }
 
     /*const actualizaEstado = async (destino) => {

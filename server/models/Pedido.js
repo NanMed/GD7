@@ -26,8 +26,9 @@ exports.actualiza = (pedido) => {
   return knex('pedido')
   .where({ id: pedido.id })
   .update({ 
+            estado: pedido.estado,
             nuevo_estado: pedido.nuevo_estado,
-            time_status: pedido.time
+            updated_at: pedido.time
           })
 }
 
