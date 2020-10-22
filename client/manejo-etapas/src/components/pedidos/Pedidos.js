@@ -1,9 +1,9 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import Pedido from './Pedido';
+
 import ReactDOM from "react-dom";
 import dragula from "react-dragula";
-import DragulaStyles from "react-dragula/dist/dragula.min.css";
+
 
 export default function App() {
     let salidaPedido = React.createRef();
@@ -48,7 +48,7 @@ export default function App() {
             
                 if (source.id == 2 && target.id == 1) {
                     dragulaN.cancel(el);
-                } else if (source.id == 4) {
+                } else if (source.id == 4 || source.id == 5 ) {
                     dragulaN.cancel(el);
                 } else {
                     actualizaPedido(el.id, source.id, target.id);
@@ -75,7 +75,7 @@ export default function App() {
         let cPedido = Object.assign([], pedidos);
         const pedidoObject = {
             estado: '1', 
-            nuevo_estado:'0'
+            nuevo_estado:'1'
         };
         await axios.post('http://localhost:5000/pedido/add', pedidoObject)
         .then((res) => {
@@ -112,7 +112,9 @@ export default function App() {
                      <div className ="col-md-3" >
                          1. Salida de planta
                          <div id="1" ref={salidaPedido}>
-                            {pedidos.map((pedido, i) => (
+                            {pedidos
+                            .filter((pos) => parseInt(pos.nuevo_estado) === 1)
+                            .map((pedido, i) => (
                                 <div key={pedido.id} id={pedido.id}>
                                 <div>
                                 <p> Pedido   { pedido.id } - { pedido.estado }</p>
@@ -122,13 +124,60 @@ export default function App() {
                         )}
                         </div>
                      </div>
-                     <div className ="col-md-3" id="2" ref={LDDc}>2. LDC </div>
-                     <div className ="col-md-3" id="3" ref={procEntrega}>3. En proceso de entrega</div>
+                     <div className ="col-md-3" id="2" ref={LDDc}>2. LDC 
+                     {pedidos
+                            .filter((pos) => parseInt(pos.nuevo_estado) === 2)
+                            .map((pedido, i) => (
+                                <div key={pedido.id} id={pedido.id}>
+                                <div>
+                                <p> Pedido   { pedido.id } - { pedido.nuevo_estado }</p>
+                                </div>
+                            </div>
+                            )
+                        )}
+                     </div>
+                     <div className ="col-md-3" id="3" ref={procEntrega}>3. En proceso de entrega
+                     {pedidos
+                            .filter((pos) => parseInt(pos.nuevo_estado) === 3)
+                            .map((pedido, i) => (
+                                <div key={pedido.id} id={pedido.id}>
+                                <div>
+                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                </div>
+                            </div>
+                            )
+                        )}
+                     
+                     </div>
                      <div className ="col-md-3"> 
                      <div className="row" style={{height:"10%"}}>4. Entregado</div>
+                     <br/>
                      <div className="row" id="4" ref={completado} style={{height:"45%"}}>a. Completo <br/>
+
+                     {pedidos
+                            .filter((pos) => parseInt(pos.nuevo_estado) === 4)
+                            .map((pedido, i) => (
+                                <div key={pedido.id} id={pedido.id}>
+                                <div>
+                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                </div>
+                            </div>
+                            )
+                        )}
                      </div>
-                     <div className="row" id="5" ref={fallido} style={{height:"45%"}}>b. Fallido</div>
+                     <div className="row" id="5" ref={fallido} style={{height:"45%"}}>b. Fallido  <br/><br/>
+                     {pedidos
+                            .filter((pos) => parseInt(pos.nuevo_estado) === 5)
+                            .map((pedido, i) => (
+                                <div key={pedido.id} id={pedido.id}>
+                                <div>
+                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                </div>
+                            </div>
+                            )
+                        )}
+                     
+                     </div>
                      </div>
                  </div>
 
