@@ -39,16 +39,10 @@ export default function App() {
             );
             dragulaN.on("drop", function (el, target, source, sibling) {
                 console.log("Elemento", el, "Target", target, "Source", source, sibling);
-                var elId = el.id;
-                var destinoId = target.id;
-                console.log(elId);
-                console.log("DestinoID", destinoId);
-                console.log("Source ", source.id)
-                //actualizaEstado(destinoId);
             
                 if (source.id == 2 && target.id == 1) {
                     dragulaN.cancel(el);
-                } else if (source.id == 4 || source.id == 5 ) {
+                } else if (source.id == 4) {
                     dragulaN.cancel(el);
                 } else {
                     actualizaPedido(el.id, source.id, target.id);
@@ -64,7 +58,7 @@ export default function App() {
         };
         await axios.post('http://localhost:5000/pedido/actualiza', pedidoObject)
         .then((res) => {
-            console.log("Logrado")
+            console.log("Pedido actualizado")
             // pedidoObject.id = res.data.data.id;
         }).catch((error) => {
             console.log("El error es: ", error)
@@ -74,13 +68,14 @@ export default function App() {
     const addPedido = async () => {
         let cPedido = Object.assign([], pedidos);
         const pedidoObject = {
+            id: '',
             estado: '1', 
             nuevo_estado:'1'
         };
         await axios.post('http://localhost:5000/pedido/add', pedidoObject)
         .then((res) => {
-            console.log(res.data.data)
-            pedidoObject.id = res.data.data.id;
+            console.log("id pedido ", res.data.id)
+            pedidoObject.id = res.data.id;
         }).catch((error) => {
             console.log("El error es: ", error)
         });
@@ -88,18 +83,6 @@ export default function App() {
         setPedidos(cPedido);
         console.log("Pedidos ", cPedido); 
     }
-
-    /*const actualizaEstado = async (destino) => {
-        await axios
-          .put(`http://localhost:5000/pedido/${id}`, { id: destino })
-          .then((res) => {
-            console.log("Estado actualizado");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      };*/
-
 
     return (
         <>
@@ -188,38 +171,4 @@ export default function App() {
       )
       
     }
-//     render(){    
-//         return (
-//             <>
-//             <div className="container">
-//                 <div className="row">Dashboard</div>
-//                 <div className ="row">
-//                     <button className="btn btn-primary">Crear pedido</button>
-//                 </div>
-//                 <div className ="row">
-//                     <div className ="col-md-3">
-//                         1. Salida de planta
-//                         <div>
-//                             {/* {this.state.pedido.map((pedido, i) => {
-//                                 return (
-//                                     <tr key={i}>
-//                                         <Pedido id={i} pedido={pedido} />
-//                                     </tr>
-//                                 )
-//                             })} */}
-//                         </div>
-//                     </div>
-//                     <div className ="col-md-3">2. LDC </div>
-//                     <div className ="col-md-3">3. En proceso de entrega</div>
-//                     <div className ="col-md-3"> 
-//                     <div className="row">4. Entregado</div>
-//                     <div className="row">a. Completo</div>
-//                     <div className="row">b. Fallido</div>
-//                     </div>
-//                 </div>
-//             </div>
-//             </>
-//         );
-//     }
-// }
 

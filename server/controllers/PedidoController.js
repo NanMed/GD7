@@ -13,25 +13,12 @@ exports.store = (req, res) => {
   });
 }
 
-// exports.changeStatus = (req,res) => {
-//   let id = req.params.id;
-//   Task.find(id)
-//     .then((data) => {
-//       if(req.xhr || req.headers.accept.indexOf('json') > -1){
-//         return res.json(), Task.changeStatus(data);
-//       } else {
-//         res.redirect('/');
-//       }
-//     });
-// }
-
 exports.showAll = (req, res) => {
   Pedido.all()
       .then((data) => {
           res.json({ data: data });
       });
 }
-
 
 exports.findById = (req,res) => {
     let id = req.params.id;
