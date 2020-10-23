@@ -40,9 +40,9 @@ export default function App() {
             dragulaN.on("drop", function (el, target, source, sibling) {
                 console.log("Elemento", el, "Target", target, "Source", source, sibling);
             
-                if (source.id === 2 && target.id === 1) {
+                if (source.id == 2 && target.id == 1) {
                     dragulaN.cancel(el);
-                } else if (source.id === 4) {
+                } else if (source.id == 4) {
                     dragulaN.cancel(el);
                 } else {
                     actualizaPedido(el.id, source.id, target.id);
