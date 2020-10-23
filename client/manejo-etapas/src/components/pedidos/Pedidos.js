@@ -40,9 +40,9 @@ export default function App() {
             dragulaN.on("drop", function (el, target, source, sibling) {
                 console.log("Elemento", el, "Target", target, "Source", source, sibling);
             
-                if (source.id == 2 && target.id == 1) {
+                if (source.id === 2 && target.id === 1) {
                     dragulaN.cancel(el);
-                } else if (source.id == 4) {
+                } else if (source.id === 4) {
                     dragulaN.cancel(el);
                 } else {
                     actualizaPedido(el.id, source.id, target.id);
@@ -88,9 +88,12 @@ export default function App() {
         <>
              <div className="container" >
                  <div className="row">Dashboard</div>
+                 <br></br>
                  <div className ="row">
                      <button className="btn btn-primary" onClick={addPedido}>Crear pedido</button>
                  </div>
+                 <br>
+                 </br>
                  <div className ="row">
                      <div className ="col-md-3" >
                          1. Salida de planta
@@ -100,7 +103,7 @@ export default function App() {
                             .map((pedido, i) => (
                                 <div key={pedido.id} id={pedido.id}>
                                 <div>
-                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                <p> Pedido   { pedido.id } </p>
                                 </div>
                             </div>
                             )
@@ -113,7 +116,7 @@ export default function App() {
                             .map((pedido, i) => (
                                 <div key={pedido.id} id={pedido.id}>
                                 <div>
-                                <p> Pedido   { pedido.id } - { pedido.nuevo_estado }</p>
+                                <p> Pedido   { pedido.id } </p>
                                 </div>
                             </div>
                             )
@@ -125,7 +128,7 @@ export default function App() {
                             .map((pedido, i) => (
                                 <div key={pedido.id} id={pedido.id}>
                                 <div>
-                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                <p> Pedido   { pedido.id } </p>
                                 </div>
                             </div>
                             )
@@ -135,26 +138,27 @@ export default function App() {
                      <div className ="col-md-3"> 
                      <div className="row" style={{height:"10%"}}>4. Entregado</div>
                      <br/>
-                     <div className="row" id="4" ref={completado} style={{height:"45%"}}>a. Completo <br/>
+                     <div className="col" id="4" ref={completado} style={{height:"100%"}}>a. Completo <br/>
 
                      {pedidos
                             .filter((pos) => parseInt(pos.nuevo_estado) === 4)
                             .map((pedido, i) => (
                                 <div key={pedido.id} id={pedido.id}>
                                 <div>
-                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                <p> Pedido   { pedido.id } </p>
                                 </div>
                             </div>
                             )
                         )}
                      </div>
-                     <div className="row" id="5" ref={fallido} style={{height:"45%"}}>b. Fallido  <br/><br/>
+ 
+                     <div className="col" id="5" ref={fallido} style={{height:"100%"}}>b. Fallido  <br/><br/>
                      {pedidos
                             .filter((pos) => parseInt(pos.nuevo_estado) === 5)
                             .map((pedido, i) => (
                                 <div key={pedido.id} id={pedido.id}>
                                 <div>
-                                <p> Pedido   { pedido.id } - { pedido.estado }</p>
+                                <p> Pedido   { pedido.id } </p>
                                 </div>
                             </div>
                             )

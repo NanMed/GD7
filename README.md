@@ -2,6 +2,7 @@
 Manejo de etapas
 cd server
 npm install
+knex migrate latest
 node run devstart
 cd client
 npm install
